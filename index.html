@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medina Bookstore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1a1a1a;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .search-bar {
+      text-align: center;
+      margin: 1rem auto;
+    }
+    .search-bar input {
+      padding: 0.5rem;
+      width: 80%;
+      max-width: 400px;
+      font-size: 1rem;
+      border: 2px solid #004aad;
+      border-radius: 6px;
+    }
+    .catalog {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .book-card {
+      border: 1px solid #eeeeee;
+      border-radius: 8px;
+      padding: 1.5rem;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+    .book-card:hover {
+      transform: translateY(-5px);
+    }
+    .book-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .book-price {
+      color: #004aad;
+      font-weight: 600;
+    }
+    footer {
+      background-color: #ffe600;
+      color: #004aad;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Medina Bookstore</h1>
+    <p>Scan. Browse. Discover.</p>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" onkeyup="filterBooks()" placeholder="Search for a book title...">
+  </div>
+
+  <section class="catalog" id="catalog">
+    <!-- BOOK LIST START -->
+  </section>
+
+  <footer>
+    <p>Located in the ICA</p>
+  </footer>
+
+  <script>
+    const books = [
+      { title: "An Islamic Perspective on Management", price: "$15" },
+      { title: "Futuwwah and Raising Males into Sacred Manhood", price: "$30" },
+      { title: "Towards a Happy Family", price: "$28" },
+      { title: "The Compassionate Family", price: "$28" },
+      { title: "Principles of Marriage and Family Ethics", price: "$18" },
+      { title: "Principles of Upbringing Children: The Codes of Training", price: "$20" },
+      { title: "A Shi'ite Anthology", price: "$22" },
+      { title: "The Wine of Love - Mystical Poetry of Imam Khomeini", price: "$18" },
+      { title: "The Scale of Wisdom: A Compendium of Shi’a Hadith (bilingual edition)", price: "$125" },
+      { title: "Al-’Amālī of Shaykh al-Ṣadūq", price: "$75" },
+      { title: "Kāmil Al-Ziyārāt", price: "$38" },
+      { title: "A Beginner's Guide to Salah", price: "$18" },
+      { title: "An Introduction To The Rights And Duties Of Women In Islam", price: "$18" },
+      { title: "On the Islamic Hijab", price: "$12" },
+      { title: "The Promised Mahdī (aj): The Words of Āyatullāh Bahjat on the Spring of His Emergence", price: "$38" },
+      { title: "Kernel of the Kernel", price: "$28" },
+      { title: "Sayyidah Fāṭimah (as): An Exemplar for Mankind", price: "$38" },
+      { title: "The Two Hundred and Fifty Year Old Man", price: "$42" },
+      { title: "Mafatih al-Jinan: An Abridged Edition", price: "$55" },
+      { title: "A Mystic’s Advice: Spiritual Guidelines by Āyatullāh Bahjat", price: "$74" },
+      { title: "Fāṭimah (as) the Gracious", price: "$38" },
+      { title: "The Sermon of Fadak (Softcover)", price: "$32" },
+      { title: "Kitab al-Irshad", price: "$30" },
+      { title: "The First Light: The Greatest Prophet (s)", price: "$15" },
+      { title: "Peshawar Nights", price: "$38" },
+      { title: "Adab as-Salat: The Disciplines of the Prayer", price: "$38" },
+      { title: "The Secret of Prayer: Sirr us-Salat", price: "$14" },
+      { title: "Fitrah: Man's Natural Disposition", price: "$32" },
+      { title: "Preparing for the Month of Ramadan: God's Banquet", price: "$14" },
+      { title: "True Servitude and the Reality of Knowledge", price: "$35" },
+      { title: "50 Qur'anic Comforts for Mums", price: "$38" },
+      { title: "A Treatise on Servitude: A Commentary on Imam Sajjad's Risalat al-Huquq (Softcover)", price: "$31" },
+      { title: "101 Ways to Concentrate in Prayer", price: "$60" },
+      { title: "Principles of the Shi'ite Creed", price: "$18" },
+      { title: "How To Pray A Good Prayer", price: "$26" },
+      { title: "Essence of Tawhid: Denial of Servitude But to God", price: "$7" },
+      { title: "Ascension to Infinity", price: "$35" },
+      { title: "Combat with the Self", price: "$28" },
+      { title: "Seeking Forgiveness and Repentance", price: "$15" },
+      { title: "Ramadhan With The Holy Qur’an: 30 Lessons in 30 days", price: "$28" },
+      { title: "God’s Emissaries", price: "$25" },
+      { title: "The Brother Of The Prophet Vol 1", price: "$20" },
+      { title: "The Brother Of The Prophet Vol 2", price: "$20" },
+      { title: "Ask those who know", price: "$18" },
+      { title: "Kitab al Ghaiba", price: "$32" },
+      { title: "The Untold Whispers Of The World", price: "$25" },
+      { title: "100 Pearls", price: "$10" },
+      { title: "Islam - an Evidence Based Primer", price: "$8" },
+      { title: "Revealia", price: "$9.99" },
+      { title: "The Peak of Al-Mizan", price: "$18" },
+      { title: "The Peak of the Quran - Surat Al-Baqara", price: "$28" },
+      { title: "Al Mizan", price: "$35" },
+      { title: "Glimpses of Al Mizan V40", price: "$50" },
+      { title: "House Of Sorrows", price: "$32" },
+      { title: "Imam Hussayn’s - Brother in Arms", price: "$28" },
+      { title: "Imam Hassan bin Ali", price: "$8" },
+      { title: "Islamic Belief System - Shomali", price: "$30" },
+      { title: "Islamic Plan for Life - Shomali", price: "$30" },
+      { title: "Lessons on Islamic Beliefs", price: "$18" },
+      { title: "Dictionary Of Shia Islam", price: "$58" },
+      { title: "Discovering Shia Islam", price: "$18" },
+      { title: "Principles Of Shia Creed", price: "$18" },
+      { title: "Why does God command me", price: "$10" },
+      { title: "Inquiries about Islam", price: "$8" },
+      { title: "Islamic Teaching’s: An Overview", price: "$3" },
+      { title: "The Scale Of Wisdom", price: "$125" },
+      { title: "Kitab al-Ghaiba", price: "$32" },
+      { title: "Kernel of the Kernel", price: "$25" },
+      { title: "The Pure Life", price: "$22" },
+      { title: "Salatul Ayat", price: "$9" },
+      { title: "Al-Kafi: Intellect and Foolishness Book I", price: "$30" },
+      { title: "Al-Kafi: Book of Knowledge and Merits Book II", price: "$30" },
+      { title: "Al-Kafi Book III", price: "$30" },
+      { title: "Nahjul Balagha (Arabic)", price: "$15" },
+      { title: "Then I was Guided", price: "$28" },
+      { title: "Imam Series (Kids)", price: "$6.99" },
+      { title: "My First Ramadan (Audio Book)", price: "$24.99" },
+      { title: "Islamic Values Quran Journal", price: "$20" },
+      { title: "The Good Tree", price: "$15" },
+      { title: "Yasser and Zahra Experience the Hajj", price: "$15" },
+      { title: "ABC’s Of Ahlul Bayt", price: "$19.99" },
+      { title: "Usul Al Deen", price: "$15.99" },
+      { title: "Heart To Madina", price: "$17.99" },
+      { title: "To Enter His Gardens", price: "$30" },
+      { title: "Rahmah The Raindrop", price: "$16" },
+      { title: "Activity Book - 40 Hadiths", price: "$18" },
+      { title: "Friends of the Faithful", price: "$12" },
+      { title: "Quran Appreciation Pack", price: "$15" },
+      { title: "Selected Quran Verses and Supplications", price: "$12" },
+      { title: "Ramadan Mubarak Large Advent Calendar", price: "$48" },
+      { title: "My Quran Study Journal", price: "$42" },
+      { title: "Supplications, Prayers, and Ziyaras", price: "$55" }
+    ];
+
+    function displayBooks() {
+      const catalog = document.getElementById("catalog");
+      catalog.innerHTML = books.map(book => `
+        <div class="book-card">
+          <div class="book-title">${book.title}</div>
+          <div class="book-price">${book.price}</div>
+        </div>
+      `).join('');
+    }
+
+    function filterBooks() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const cards = document.getElementsByClassName('book-card');
+
+      for (let i = 0; i < cards.length; i++) {
+        const title = cards[i].getElementsByClassName('book-title')[0];
+        const textValue = title.textContent || title.innerText;
+        cards[i].style.display = textValue.toLowerCase().includes(filter) ? '' : 'none';
+      }
+    }
+
+    displayBooks();
+  </script>
+</body>
+</html>
